@@ -1,8 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+
+import { ChallangesContext } from '../../contexts/ChallangesContext';
 
 let tempo: NodeJS.Timeout;
 
 function CountDown() {
+
+    const { startNewChallange } = useContext(ChallangesContext);
 
     const [ time, setTime ] = useState(0.1 * 60);
     const [ isActive, setIsActive ] = useState(false);
@@ -33,6 +37,7 @@ function CountDown() {
         else if (isActive && time === 0) {
             setHasFinish(true);
             setIsActive(false);
+            startNewChallange();
         }
     },[isActive, time]);
 

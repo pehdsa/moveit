@@ -1,0 +1,109 @@
+.challange-box-container {
+    height: 100%;
+    background: $white;
+    border-radius: 5px;
+    box-shadow: 0 0 60px rgba(0,0,0,.05);
+    padding: 1.5rem 2rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    & .challange-not-active {
+        display: flex;
+        flex-direction: column;
+        align-items: center
+    }
+
+    & .challange-not-active strong {
+        font-size: 1.5rem;
+        font-weight: 500;
+        line-height: 1.4;
+    }
+
+    & .challange-not-active p {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        line-height: 1.4;
+        max-width: 70%;
+        margin-top: 3rem;
+    }
+
+    & .challange-not-active p img {
+        margin-bottom: 1rem;
+    }
+
+
+
+    & .challange-active {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    & .challange-active header {
+        color: $blue;
+        font-weight: 600;
+        font-size: 1.25rem;
+        padding: 0 2rem 1.5rem;
+        border-bottom: 1px solid $gray-line
+    }
+
+    & .challange-active main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    & .challange-active main strong {
+        font-weight: 600;
+        font-size: 2rem;
+        color: $title;
+        margin: 1.5rem 0 1rem;
+    }
+
+    & .challange-active main p {
+        line-height: 1.5;
+    }
+
+    & .challange-active footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    & .challange-active footer button {
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 5px;
+        background: $white;
+
+        font-size: 1rem;
+        font-weight: 600;
+
+        transition: filter .2s ease;
+    }
+
+    & .challange-active footer button.challange-fail-button {
+        background: $red;
+        color: $white;
+    }
+
+    & .challange-active footer button.challange-succeeded-button {
+        background: $green;
+        color: $white;
+    }
+
+    & .challange-active footer button:hover {
+        filter: brightness(0.9);
+    }
+
+}
