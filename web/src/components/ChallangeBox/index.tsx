@@ -1,25 +1,23 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 
 import { ChallangesContext } from '../../contexts/ChallangesContext';
 
 function ChallangeBox() {
 
-    const { level, levelUp } = useContext(ChallangesContext);
-
-    const [ hasActiveChallange, setHasActiveChallange ] = useState(true);
+    const { activeChallange, resetChallange } = useContext(ChallangesContext);
 
     return (
         <div className="challange-box-container">
-            { hasActiveChallange ? (
+            { activeChallange ? (
                 <div className="challange-active">
-                    <header>Ganhe 400xp</header>
+                    <header>Ganhe { activeChallange.amount } xp</header>
                     <main>
-                        <img src="icons/body.svg" alt="" />
+                        <img src={`icons/${ activeChallange.type }.svg`} alt="" />
                         <strong>Novo desafio</strong>
-                        <p>Levante e faça uma caminhada de 3 minutos</p>
+                        <p>{ activeChallange.description }</p>
                     </main>                    
                     <footer>
-                        <button type="button" className="challange-fail-button">Falhei</button>
+                        <button type="button" onClick={ resetChallange } className="challange-fail-button">Falhei</button>
                         <button type="button" className="challange-succeeded-button">Completei</button>
                     </footer>
                 </div>
