@@ -1,45 +1,20 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 
-import { ChallangesContext } from '../../contexts/ChallangesContext';
+import { CountDownContext } from '../../contexts/CountDownContext';
 
-let tempo: NodeJS.Timeout;
+function CountDown() {    
 
-function CountDown() {
-
-    const { startNewChallange } = useContext(ChallangesContext);
-
-    const [ time, setTime ] = useState(0.1 * 60);
-    const [ isActive, setIsActive ] = useState(false);
-    const [ hasFinish, setHasFinish ] = useState(false);
-
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
+    const { 
+        minutes, 
+        seconds, 
+        hasFinish, 
+        isActive, 
+        resetCountDown, 
+        startCountDown
+    } = useContext(CountDownContext);
 
     const [ minuteLeft, minutoRight ] = String(minutes).padStart(2,'0').split('');
-    const [ secondLeft, secondRight ] = String(seconds).padStart(2,'0').split('');
-
-    function startCountDown() {
-        setIsActive(true);
-    }
-
-    function resetCountDown() {
-        clearTimeout(tempo);
-        setIsActive(false);
-        setTime(0.1 * 60);
-    }
-
-    useEffect(() => {
-        if (isActive && time > 0) {
-            tempo = setTimeout(() => {
-                setTime(time - 1);
-            },1000);
-        }
-        else if (isActive && time === 0) {
-            setHasFinish(true);
-            setIsActive(false);
-            startNewChallange();
-        }
-    },[isActive, time]);
+    const [ secondLeft, secondRight ] = String(seconds).padStart(2,'0').split('');    
 
     return (
         <div>

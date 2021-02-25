@@ -1,4 +1,4 @@
-import { useState, createContext, ReactNode } from 'react';
+import { useEffect, useState, createContext, ReactNode } from 'react';
 import challanges from '../../challenges.json';
 
 interface ChallangesProviderProps {
@@ -20,6 +20,7 @@ interface ChallangesContextData {
     levelUp:() => void,
     startNewChallange:() => void,
     resetChallange:() => void,
+    completeChallange:() => void
 }
 
 export const ChallangesContext = createContext({} as ChallangesContextData);
@@ -33,6 +34,10 @@ export function ChallangeProvider({ children }: ChallangesProviderProps) {
 
     const expToNextLevel = Math.pow((level + 1) * 4 ,2)
 
+    useEffect(() => {
+        Notification.requestPermission();
+    },[]);
+
     function levelUp() {
         setLevel(level + 1);
     }
@@ -40,11 +45,40 @@ export function ChallangeProvider({ children }: ChallangesProviderProps) {
     function startNewChallange() {
         const randomChallangeIndex = Math.floor(Math.random() * challanges.length);
         const challenge = challanges[randomChallangeIndex];
+        
         setActiveChallange(challenge);
+
+        new Audio('/notification.mp3').play();
+
+        if(Notification.permission === 'granted') {
+            new Notification('Novo desafio', {                
+                body: `Valendo ${ challenge.amount }xp`
+            })
+        }
+
     }
 
     function resetChallange(){
         setActiveChallange(null);
+    }
+
+    function completeChallange() {
+        if(!activeChallange) {
+            return;
+        }
+
+        const { amount } = activeChallange;
+        let finalExperience = currentExp + amount;
+
+        if (finalExperience >= expToNextLevel) {
+            finalExperience = finalExperience - expToNextLevel;
+            levelUp();
+        }
+
+        setCurrentExp(finalExperience);
+        setActiveChallange(null);
+        setChallangesCompleted(challangesCompleted + 1);
+
     }
  
     return (
@@ -56,7 +90,8 @@ export function ChallangeProvider({ children }: ChallangesProviderProps) {
             startNewChallange,
             activeChallange,
             resetChallange,
-            expToNextLevel
+            expToNextLevel,
+            completeChallange
         }}>
             { children }
         </ChallangesContext.Provider>

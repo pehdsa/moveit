@@ -1,5 +1,12 @@
 
+import { useContext } from 'react';
+
+import { ChallangesContext } from '../../contexts/ChallangesContext';
+
 function Profiler() {
+
+    const { level } = useContext(ChallangesContext);
+
     return (
         <div className="profile-container">
             <img src="https://github.com/pehdsa.png" alt="" />
@@ -7,7 +14,7 @@ function Profiler() {
                 <strong>Pedro Henrique</strong>
                 <p>
                     <img src="icons/level.svg" alt="" />
-                    Level 1
+                    Level { level }
                 </p>
             </div>
         </div>
