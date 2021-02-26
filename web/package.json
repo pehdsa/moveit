@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "sass src/styles/scss:src/styles/css && next build",
+    "build": "next build",
     "start": "next start",
     "sass": "sass --watch src/styles/scss:src/styles/css --style compressed"
   },

@@ -1,0 +1,61 @@
+.level-up-modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(242,243,245,.8);   
+
+    visibility: hidden;
+    z-index: -1;
+
+    &.show {
+        visibility: visible;
+        z-index: 10;
+    }
+
+    & .level-up-modal-container { 
+        background-color: $white;
+        width: 100%;
+        max-width: 400px;
+        padding: 2rem 3rem;
+        border-radius: 5px;
+        box-shadow: 0 0 60px rgba(0,0,0,0.05);
+        text-align: center;
+        position: relative;
+    }
+
+    & .level-up-modal-container header {
+        font-size: 8.75rem;
+        font-weight: 600;
+        color: $blue;
+        background: url('/icons/levelup.svg') no-repeat center;
+        background-size: contain;
+    }
+
+    & .level-up-modal-container strong {
+        font-size: 2.25rem;
+        color: $title;
+    }
+
+    & .level-up-modal-container p {
+        font-size: 1.25rem;
+        color: $text;
+        margin-top: 0.25rem;
+    }
+
+    & .level-up-modal-container button {
+        position: absolute;
+        right: 0.25rem;
+        top: 0.25rem;
+        background: transparent;
+        border: 0;
+        font-size: 0;
+    }
+
+}
