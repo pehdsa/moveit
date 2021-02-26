@@ -1,7 +1,11 @@
 import { useEffect, useState, createContext, ReactNode } from 'react';
+import Cookie from 'js-cookie';
 import challanges from '../../challenges.json';
 
 interface ChallangesProviderProps {
+    level: number,
+    currentExp: number,
+    challangesCompleted: number,
     children: ReactNode
 }
 
@@ -25,10 +29,10 @@ interface ChallangesContextData {
 
 export const ChallangesContext = createContext({} as ChallangesContextData);
 
-export function ChallangeProvider({ children }: ChallangesProviderProps) {
-    const [ level, setLevel ] = useState(1);
-    const [ currentExp, setCurrentExp ] = useState(0);
-    const [ challangesCompleted, setChallangesCompleted ] = useState(0);
+export function ChallangeProvider(props : ChallangesProviderProps) {
+    const [ level, setLevel ] = useState(props.level ?? 1);
+    const [ currentExp, setCurrentExp ] = useState(props.currentExp ?? 0);
+    const [ challangesCompleted, setChallangesCompleted ] = useState(props.challangesCompleted ?? 0);
     
     const [ activeChallange, setActiveChallange ] = useState(null);
 
@@ -37,6 +41,12 @@ export function ChallangeProvider({ children }: ChallangesProviderProps) {
     useEffect(() => {
         Notification.requestPermission();
     },[]);
+
+    useEffect(() => {
+        Cookie.set('level', String(level));
+        Cookie.set('currentExp', String(currentExp));
+        Cookie.set('challangesCompleted', String(challangesCompleted));
+    },[level, currentExp, challangesCompleted])
 
     function levelUp() {
         setLevel(level + 1);
@@ -51,7 +61,8 @@ export function ChallangeProvider({ children }: ChallangesProviderProps) {
         new Audio('/notification.mp3').play();
 
         if(Notification.permission === 'granted') {
-            new Notification('Novo desafio', {                
+            new Notification('Novo desafio', {      
+                icon: '/favicon.png',
                 body: `Valendo ${ challenge.amount }xp`
             })
         }
@@ -93,7 +104,7 @@ export function ChallangeProvider({ children }: ChallangesProviderProps) {
             expToNextLevel,
             completeChallange
         }}>
-            { children }
+            { props.children }
         </ChallangesContext.Provider>
     )
 }
